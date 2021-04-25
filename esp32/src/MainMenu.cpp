@@ -1,9 +1,3 @@
-
-#include "MainMenu.h"
-#include "configuration.h"
-#include "FilamentSettings.h"
-#include "FilamentDryer.h"
-
 #include <ClickEncoder.h>  // Using this library: https://github.com/soligen2010/encoder.git
 #include <Wire.h>
 #include <array>
@@ -14,7 +8,13 @@
 #include <menuIO/chainStream.h>
 #include <menuIO/serialOut.h>
 #include <menuIO/serialIn.h>
+
+#include "MainMenu.h"
+#include "configuration.h"
+#include "FilamentSettings.h"
+#include "FilamentDryer.h"
 #include "DoMenu.h"
+#include "sensors.h"
 
 extern "C" {
   #include "freertos/timers.h"
@@ -26,8 +26,9 @@ using namespace Menu;
 #define offsetY   3
 #define MAX_DEPTH 5
 
-extern U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2;
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, SCREEW_SCL_PIN, SCREEW_SDA_PIN);
 extern dryerSetting dryerParameters;
+extern dhtSensor  boxSensor;
 
 bool running=true;//lock menu if false
 const colorDef<uint8_t> colors[6] MEMMODE={
@@ -280,7 +281,21 @@ result MyIdleOn(menuOut& o,idleEvent e) {
   o.clear();
   switch(e) {
     case idleStart:o.println("suspending menu!");break;
-    case idling:o.println("suspended...");break;
+    case idling: 
+Serial.println("Idle");    
+  u8g2.firstPage();
+  do {
+    u8g2.setColorIndex(1);
+    nav.out[0].setCursor(0,0);
+    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
+    nav.out[0].setCursor(0,1);
+    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
+    nav.out[0].setCursor(0,2);
+    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
+    nav.out[0].setCursor(0,3);
+    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
+  } while(u8g2.nextPage());
+      break;
     case idleEnd:o.println("resuming menu.");break;
   }
   return proceed;
@@ -290,9 +305,9 @@ result alert(menuOut& o,idleEvent e) {
   if (e==idling) {
     o.setCursor(0,0);
     o.print("alert test");
-    o.setCursor(0,1);
-    o.print("press [select]");
     o.setCursor(0,2);
+    o.print("press [select]");
+    o.setCursor(0,3);
     o.print("to continue...");
   }
   return proceed;

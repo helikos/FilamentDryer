@@ -33,12 +33,7 @@
 #define STEP_PID_2 0.01
 
 // 0X3C+SA0 - 0x3C or 0x3D
-#define I2C_ADDRESS 0x3C
-
-//#define SCREEN_WIDTH 128 // OLED display width, in pixels
-//#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-//#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+/// #define I2C_ADDRESS 0x3C
 
 #define DHTTYPE DHT22 // DHT 22 (AM2302)
 
