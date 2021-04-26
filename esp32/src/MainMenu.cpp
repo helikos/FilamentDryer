@@ -14,7 +14,7 @@
 #include "FilamentSettings.h"
 #include "FilamentDryer.h"
 #include "DoMenu.h"
-#include "sensors.h"
+#include "sensors/dhtSensor.h"
 
 extern "C" {
   #include "freertos/timers.h"

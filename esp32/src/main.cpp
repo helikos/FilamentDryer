@@ -7,6 +7,7 @@
 #include "FilamentSettings.h"
 #include "configuration.h"
 #include "sensors.h"
+#include "sensors/sensor.h"
 
 extern void writeDefaultSettings();
 extern bool readSettings(dryerSetting &settings);
@@ -16,11 +17,10 @@ extern bool running;//lock menu if false
 extern void mainMenuinitializate();
 extern navRoot nav;
 
-// #include <DHT.h>
-// #include <DHT_U.h>
+extern sensor* dallasSensorsInitialization(uint8_t pin);
 
-// #include <OneWire.h>
-// #include <DallasTemperature.h>
+sensor* tempSensor1;
+sensor* tempSensor2;
 
 
 //#include <GyverPWM.h>
@@ -45,30 +45,31 @@ void setup() {
   /*
   * EEPROM initialization
   */
+  /*
   EEPROM.begin(512);
-  #ifdef debug
   if (readSettings(dryerParameters)) {
     Serial.println("Reading was successful"); 
   } else {
     Serial.println("Reading was not successful"); 
-
   }
-  #endif
+  */
   /*
   * Menu initialization
   */
-  mainMenuinitializate();
+  //mainMenuinitializate();
   /*
   * Sensor initialization
   */
   sensorsInitialization();
+  tempSensor1 = dallasSensorsInitialization(DALLASTEMP_HEATER_PIN);
+  tempSensor2 = dallasSensorsInitialization(DALLASTEMP_BOX_PIN);
+
+
 
 }
 
-
-
 void loop() {
-
+/*
 //  if (running) {
     nav.doInput();
     if (nav.changed(0)) {//only draw if menu changed for gfx device
@@ -77,10 +78,9 @@ void loop() {
       do nav.doOutput(); while(u8g2.nextPage());
     }
 //  }  
-
-  delay(100);//simulate other tasks delay
-
+*/
+  delay(800);//simulate other tasks delay
+//  tempSensor1->getTemperature();
+//  tempSensor2->getTemperature();
 
 }
-
-

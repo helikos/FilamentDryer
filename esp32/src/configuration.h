@@ -32,9 +32,6 @@
 #define STEP_PID 0.1
 #define STEP_PID_2 0.01
 
-// 0X3C+SA0 - 0x3C or 0x3D
-/// #define I2C_ADDRESS 0x3C
-
 #define DHTTYPE DHT22 // DHT 22 (AM2302)
 
 /*
