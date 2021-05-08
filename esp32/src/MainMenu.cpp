@@ -14,7 +14,7 @@
 #include "FilamentSettings.h"
 #include "FilamentDryer.h"
 #include "DoMenu.h"
-#include "sensors/dhtSensor.h"
+//#include "sensors/dhtSensor.h"
 
 extern "C" {
   #include "freertos/timers.h"
@@ -28,7 +28,7 @@ using namespace Menu;
 
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, SCREEW_SCL_PIN, SCREEW_SDA_PIN);
 extern dryerSetting dryerParameters;
-extern dhtSensor  boxSensor;
+//extern dhtSensor  boxSensor;
 
 bool running=true;//lock menu if false
 const colorDef<uint8_t> colors[6] MEMMODE={
@@ -287,13 +287,13 @@ Serial.println("Idle");
   do {
     u8g2.setColorIndex(1);
     nav.out[0].setCursor(0,0);
-    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
+//    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
     nav.out[0].setCursor(0,1);
-    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
+//    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
     nav.out[0].setCursor(0,2);
-    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
+//    nav.out[0].printf("Temp %f",boxSensor.getTemperature());
     nav.out[0].setCursor(0,3);
-    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
+//    nav.out[0].printf("Humidity %f", boxSensor.getHumidity());
   } while(u8g2.nextPage());
       break;
     case idleEnd:o.println("resuming menu.");break;

@@ -1,29 +1,39 @@
-#ifndef _DHT_SENSORS_H
-#define _DHT_SENSORS_H
+#pragma once
 
-#include <DHT.h>
+#ifndef _DHT_SENSOR_H
+#define _DHT_SENSOR_H
+
+#include <stdint.h>
 #include <DHT_U.h>
 
+#include "sensor.h"
+#include "configuration.h"
 
-struct dhtSensor {
- 
-  DHT_Unified sensor; // (DHT_PIN, DHTTYPE);
-  int32_t delayMS;
-  float _temperature;
-  float _humidity;
-  float getTemperature() {
-      get();
-      return _temperature;
-  };
+class dhtSensor : public sensor
+{
+
+public:
+
+  dhtSensor(uint8_t pin) : sensor(pin) {
+   last_millis =  0;
+   initialization();
+  }; 
+
   float getHumidity() {
       get();
-      return _humidity;
+      return humidity;
   };
-  unsigned long last_millis;
-  bool get();
+
+protected:
+    DHT_Unified* DHT_Sensor;
+    bool get();
+    void initialization();
+    int32_t delayMS;
+    unsigned long last_millis;
+    float humidity;
+
 };
 
-void dhtSensorInitialization();
-
+dhtSensor* dhtSensorInitialization(uint8_t pin);
 
 #endif

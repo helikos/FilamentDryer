@@ -1,7 +1,8 @@
 
-#include "sensors/dhtSensor.h"
-#include "sensors/dallasSensor.h"
-
+//#include "sensors/dhtSensor.h"
+//#include "sensors/dallasSensor.h"
+#include "configuration.h"
+#include <Arduino.h>
 
 
 void sensorsInitialization()
@@ -10,7 +11,7 @@ void sensorsInitialization()
     Serial.println(F("----------------- Sensor Initialization -------------------"));
 #endif
 
-    dhtSensorInitialization();
+//    dhtSensorInitialization();
 //    dallasSensorsInitialization();
 
 #ifdef debug
